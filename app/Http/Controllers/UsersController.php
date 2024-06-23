@@ -14,7 +14,7 @@ class UsersController extends BaseController
 
     public function index(): JsonResponse
     {
-        $users = User::query()->with('profile')->latest()->paginate(10);
+        $users = User::query()->with(['profile','profile.experiences'])->latest()->paginate(10);
         return $this->buildSuccessResponse($users, "Records retrieved successfully");
     }
 

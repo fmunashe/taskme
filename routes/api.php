@@ -16,6 +16,8 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('register', [AuthenticationController::class, 'store']);
     Route::post('generateOneTimePin', [AuthenticationController::class, 'generateOneTimePin']);
     Route::post('verifyMobileNumber', [AuthenticationController::class, 'verifyMobileNumber']);
+    Route::post('generateEmailVerificationCode', [AuthenticationController::class, 'generateEmailVerificationCode']);
+    Route::post('verifyEmail', [AuthenticationController::class, 'verifyEmail']);
     Route::post('resetPassword', [AuthenticationController::class, 'resetPassword']);
 });
 

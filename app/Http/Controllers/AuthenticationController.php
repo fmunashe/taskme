@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\EmailVerificationRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\OtpGenerationRequest;
 use App\Http\Requests\PhoneNumberVerificationRequest;
 use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\VerifyEmailRequest;
 use App\Models\User;
+use App\Notifications\VerifyUserEmail;
 use App\Traits\GlobalData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
 
 class AuthenticationController extends BaseController
@@ -48,6 +52,38 @@ class AuthenticationController extends BaseController
 
         return $this->buildSuccessResponse(null, "Mobile number successfully verified");
     }
+
+    public function generateEmailVerificationCode(EmailVerificationRequest $request): JsonResponse
+    {
+        $userEmail = $request->email;
+        $user = User::query()->firstWhere('email', '=', $userEmail);
+        $otp = $this->generateOtp();
+        $user->otp = $otp;
+        $user->save();
+
+        Notification::send($user, new VerifyUserEmail($user));
+        return $this->buildSuccessResponse(null, "Verification code successfully sent to the provided email address");
+    }
+
+    public function verifyEmail(VerifyEmailRequest $request): JsonResponse
+    {
+        $email = $request->email;
+        $otp = $request->otp;
+
+        $user = User::query()
+            ->firstWhere('email', '=', $email)
+            ->firstWhere('otp', '=', $otp);
+        if (!$user) {
+            return $this->buildErrorResponse("Invalid OTP or Email provided ", [], 400);
+        }
+
+        $user->update([
+            'email_verified_at' => now()
+        ]);
+
+        return $this->buildSuccessResponse(null, "Email successfully verified");
+    }
+
 
     public function generateOneTimePin(OtpGenerationRequest $request): JsonResponse
     {

@@ -13,7 +13,16 @@ class UserProfileController extends BaseController
 
     public function index(): JsonResponse
     {
-        $profiles = UserProfile::query()->with(['references'])->latest()->paginate(10);
+        $profiles = UserProfile::query()->with([
+            'references',
+            'experiences',
+            'experiences.duties',
+            'relatives',
+            'disabilities',
+            'healthConditions',
+            'references',
+            'documents'
+        ])->latest()->paginate(10);
         return $this->buildSuccessResponse($profiles, 'Profiles retrieved successfully');
     }
 
@@ -43,7 +52,16 @@ class UserProfileController extends BaseController
 
     public function show($userProfileId): JsonResponse
     {
-        $profile = UserProfile::query()->firstWhere('id', '=', $userProfileId);
+        $profile = UserProfile::query()->with([
+            'references',
+            'experiences',
+            'experiences.duties',
+            'relatives',
+            'disabilities',
+            'healthConditions',
+            'references',
+            'documents'
+        ])->firstWhere('id', '=', $userProfileId);
         if ($profile == null) {
             return $this->buildErrorResponse("User profile with id " . $userProfileId . " not found");
         }
@@ -51,7 +69,7 @@ class UserProfileController extends BaseController
     }
 
 
-    public function update(UpdateUserProfileRequest $request, $userProfileId)
+    public function update(UpdateUserProfileRequest $request, $userProfileId): JsonResponse
     {
         $profile = UserProfile::query()->firstWhere('id', '=', $userProfileId);
         if ($profile == null) {

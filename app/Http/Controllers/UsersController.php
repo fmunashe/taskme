@@ -30,7 +30,16 @@ class UsersController extends BaseController
 
     public function show($userId): JsonResponse
     {
-        $user = User::query()->firstWhere('id', '=', $userId);
+        $user = User::query()->with([
+            'profile',
+            'profile.experiences',
+            'profile.experiences.duties',
+            'profile.relatives',
+            'profile.disabilities',
+            'profile.healthConditions',
+            'profile.references',
+            'profile.documents'
+        ])->firstWhere('id', '=', $userId);
         if ($user == null) {
             return $this->buildErrorResponse("User with id " . $userId . " not found");
         }

@@ -41,7 +41,7 @@ class WorkExperienceController extends BaseController
 
     public function show($workExperienceId): JsonResponse
     {
-        $workExperience = WorkExperience::query()->firstWhere('id', '=', $workExperienceId);
+        $workExperience = WorkExperience::query()->with(['profile', 'duties'])->firstWhere('id', '=', $workExperienceId);
         if ($workExperience == null) {
             return $this->buildErrorResponse("Work experience with id " . $workExperienceId . " not found");
         }

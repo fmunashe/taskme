@@ -1,11 +1,11 @@
 <?php
 
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,10 +13,15 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('firstName');
+            $table->string('lastName');
             $table->string('email')->unique();
+            $table->string('phoneNumber');
+            $table->string('otp');
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('mobile_verified_at')->nullable();
             $table->string('password');
+            $table->foreignIdFor(Role::class)->default(1)->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -53,6 +53,10 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+
+    'TWILIO_ACCOUNT_SID' => env('TWILIO_ACCOUNT_SID'),
+    'TWILIO_AUTH_TOKEN' => env('TWILIO_AUTH_TOKEN'),
+    'TWILIO_NUMBER' => env('TWILIO_NUMBER'),
 
     /*
     |--------------------------------------------------------------------------

@@ -22,7 +22,8 @@ class UpdateWorkExperienceRequest extends FormRequest
             'positionHeld' => 'required',
             'startDate' => 'required|date|before:today',
             'endDate' => 'required|date|after:startDate|before:tomorrow',
-            'reasonForLeaving' => 'required|min:5'
+            'reasonForLeaving' => 'required|min:5',
+            'organisation' => 'required|min:3',
         ];
     }
 

@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->date('startDate');
             $table->date('endDate')->nullable();
             $table->longText('reasonForLeaving')->nullable();
+            $table->string('organisation');
             $table->timestamps();
         });
     }

@@ -32,7 +32,8 @@ class WorkExperienceController extends BaseController
             'positionHeld' => $data['positionHeld'],
             'startDate' => $data['startDate'],
             'endDate' => $data['endDate'],
-            'reasonForLeaving' => $data['reasonForLeaving']
+            'reasonForLeaving' => $data['reasonForLeaving'],
+            'organisation' => $data['organisation']
         ]);
         return $this->buildSuccessResponse($ref, 'Work experience successfully attached to profile');
     }
@@ -61,7 +62,8 @@ class WorkExperienceController extends BaseController
             'positionHeld' => $data['positionHeld'],
             'startDate' => $data['startDate'],
             'endDate' => $data['endDate'],
-            'reasonForLeaving' => $data['reasonForLeaving']
+            'reasonForLeaving' => $data['reasonForLeaving'],
+            'organisation' => $data['organisation']
         ]);
 
         return $this->buildSuccessResponse($workExperience, 'Work experience updated successfully');

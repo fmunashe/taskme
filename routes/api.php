@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DisabilityController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\HealthConditionController;
 use App\Http\Controllers\NextOfKinController;
@@ -42,4 +43,5 @@ Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
     Route::apiResource('disabilities', DisabilityController::class)->except(['create', 'edit']);
     Route::apiResource('workExperience', WorkExperienceController::class)->except(['create', 'edit']);
     Route::apiResource('workExperienceDuties', WorkDutyController::class)->except(['create', 'edit']);
+    Route::apiResource('Documents', DocumentController::class)->except(['create', 'edit']);
 });

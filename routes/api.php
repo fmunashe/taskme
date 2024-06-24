@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DisabilityController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentsVerificationController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\HealthConditionController;
 use App\Http\Controllers\NextOfKinController;
@@ -44,4 +45,11 @@ Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
     Route::apiResource('workExperience', WorkExperienceController::class)->except(['create', 'edit']);
     Route::apiResource('workExperienceDuties', WorkDutyController::class)->except(['create', 'edit']);
     Route::apiResource('Documents', DocumentController::class)->except(['create', 'edit']);
+    Route::group(['prefix' => 'documentVerification'], function () {
+        Route::post('verifyCV', [DocumentsVerificationController::class, 'verifyCV']);
+        Route::post('verifyNationalId', [DocumentsVerificationController::class, 'verifyNationalId']);
+        Route::post('verifyPassport', [DocumentsVerificationController::class, 'verifyPassport']);
+        Route::post('verifyProofOfResidence', [DocumentsVerificationController::class, 'verifyProofOfResidence']);
+        Route::post('verifyPoliceClearance', [DocumentsVerificationController::class, 'verifyPoliceClearance']);
+    });
 });

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('description');
             $table->string('documentPath');
+            $table->boolean('verified')->default(false);
             $table->timestamps();
         });
     }

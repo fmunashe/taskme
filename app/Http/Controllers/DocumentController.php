@@ -13,7 +13,7 @@ class DocumentController extends BaseController
 
     public function index(): JsonResponse
     {
-        $documents = Document::query()->with('profile')->latest()->paginate(10);
+        $documents = Document::query()->with('userProfile')->latest()->paginate(10);
         return $this->buildSuccessResponse($documents, "Records retrieved successfully");
     }
 
@@ -36,7 +36,7 @@ class DocumentController extends BaseController
 
     public function show($documentId): JsonResponse
     {
-        $document = Document::query()->with(['profile'])->firstWhere('id', '=', $documentId);
+        $document = Document::query()->with(['userProfile'])->firstWhere('id', '=', $documentId);
         if ($document == null) {
             return $this->buildErrorResponse("Document with id " . $documentId . " not found");
         }

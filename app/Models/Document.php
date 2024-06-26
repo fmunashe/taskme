@@ -18,12 +18,12 @@ class Document extends Model
         'documentPath',
     ];
 
-    public function profile(): BelongsTo
+    public function userProfile(): BelongsTo
     {
         return $this->belongsTo(UserProfile::class);
     }
 
-    public function docType(): BelongsTo
+    public function documentType(): BelongsTo
     {
         return $this->belongsTo(DocumentType::class);
     }

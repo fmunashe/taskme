@@ -44,7 +44,8 @@ class UserProfileController extends BaseController
             'maritalStatus' => $data['maritalStatus'],
             'gender' => $data['gender'],
             'religion' => $data['religion'],
-            'address' => $data['address']
+            'address' => $data['address'],
+            'status' => $data['status']
         ]);
         return $this->buildSuccessResponse($profile, 'User profile created successfully');
     }

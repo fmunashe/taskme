@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->enum('gender', ['Male', 'Female'])->nullable();
             $table->string('religion')->nullable();
             $table->text('address')->nullable();
+            $table->enum('status', ['Active', 'Pending Review', 'Inactive'])->default('Pending Review');
             $table->timestamps();
         });
     }

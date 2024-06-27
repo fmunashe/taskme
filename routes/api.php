@@ -7,6 +7,7 @@ use App\Http\Controllers\DocumentsVerificationController;
 use App\Http\Controllers\DocumentTypeController;
 use App\Http\Controllers\HealthConditionController;
 use App\Http\Controllers\JobCategoryController;
+use App\Http\Controllers\JobListingController;
 use App\Http\Controllers\NextOfKinController;
 use App\Http\Controllers\RecordStatusController;
 use App\Http\Controllers\ReferenceController;
@@ -60,4 +61,5 @@ Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
     Route::apiResource('serviceListings', ServiceListingController::class)->except(['create', 'edit']);
     Route::apiResource('recordStatuses', RecordStatusController::class)->except(['create', 'edit']);
     Route::apiResource('jobCategories', JobCategoryController::class)->except(['create', 'edit']);
+    Route::apiResource('jobListings', JobListingController::class)->except(['create', 'edit']);
 });

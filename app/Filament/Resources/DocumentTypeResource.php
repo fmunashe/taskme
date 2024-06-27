@@ -10,8 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DocumentTypeResource extends Resource
 {
@@ -29,9 +27,9 @@ class DocumentTypeResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->maxLength(255),
                 Forms\Components\Select::make('status')
-                    ->options(['Active', 'Inactive', 'Deleted'])
+                    ->options(['Active' => 'Active', 'Inactive' => 'Inactive', 'Deleted' => 'Deleted'])
                     ->searchable()
-                ->preload(),
+                    ->preload(),
             ]);
     }
 

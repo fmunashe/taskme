@@ -9,13 +9,15 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class DocumentResource extends Resource
 {
     protected static ?string $model = Document::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-m-bolt';
 
     public static function form(Form $form): Form
     {
@@ -36,14 +38,19 @@ class DocumentResource extends Resource
                 Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('documentPath')
-                    ->required()
-                    ->maxLength(255),
+//                Forms\Components\TextInput::make('documentPath')
+//                    ->required()
+//                    ->maxLength(255),
                 Forms\Components\Toggle::make('verified')
+                    ->onColor('primary')
+                    ->offColor('danger')
                     ->required(),
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -72,7 +79,17 @@ class DocumentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('Document Type')
+                    ->multiple()
+                    ->options([
+                        'CV' => 'CV',
+                        'Passport' => 'Passport',
+                        'National ID' => 'National ID',
+                        'Proof of Residence' => 'Proof of Residence',
+                        'Police Clearance' => 'Police Clearance',
+                    ])
+                ->relationship('documentType','documentType')
+                ->preload()
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

@@ -24,7 +24,8 @@ class DisabilityResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_profile_id')
-                    ->relationship('userProfile.user','firstName')
+                    ->relationship('userProfile','idNumber')
+                    ->label('User Profile')
                     ->preload()
                     ->searchable()
                     ->required(),
@@ -43,7 +44,7 @@ class DisabilityResource extends Resource
                 Tables\Columns\TextColumn::make('userProfile.user.firstName')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name','test')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->searchable(),

@@ -31,7 +31,7 @@ class UserRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
-                    ->required()
+                    ->nullable()
                     ->maxLength(255),
                 Forms\Components\Select::make('role_id')
                     ->relationship('role','name')

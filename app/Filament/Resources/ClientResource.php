@@ -33,6 +33,9 @@ class ClientResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -45,7 +48,10 @@ class ClientResource extends Resource
                 Tables\Columns\TextColumn::make('role.name'),
             ])
             ->filters([
-                //
+               Tables\Filters\SelectFilter::make('Role')
+                ->multiple()
+                ->relationship('role','name')
+                ->preload()
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -54,7 +60,7 @@ class ClientResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

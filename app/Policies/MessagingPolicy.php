@@ -2,25 +2,24 @@
 
 namespace App\Policies;
 
-use App\Models\Disability;
+use App\Models\Message;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class DisabilityPolicy
+class MessagingPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-
         return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Disability $disability): bool
+    public function view(User $user, Message $messaging): bool
     {
         return true;
     }
@@ -36,7 +35,7 @@ class DisabilityPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Disability $disability): bool
+    public function update(User $user, Message $messaging): bool
     {
         return true;
     }
@@ -44,7 +43,7 @@ class DisabilityPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Disability $disability): bool
+    public function delete(User $user, Message $messaging): bool
     {
         return true;
     }
@@ -52,7 +51,7 @@ class DisabilityPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Disability $disability): bool
+    public function restore(User $user, Message $messaging): bool
     {
         return true;
     }
@@ -60,7 +59,7 @@ class DisabilityPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Disability $disability): bool
+    public function forceDelete(User $user, Message $messaging): bool
     {
         return true;
     }

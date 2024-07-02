@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\ConnectController;
 use App\Http\Controllers\DisabilityController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentsVerificationController;
@@ -62,4 +63,5 @@ Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
     Route::apiResource('recordStatuses', RecordStatusController::class)->except(['create', 'edit']);
     Route::apiResource('jobCategories', JobCategoryController::class)->except(['create', 'edit']);
     Route::apiResource('jobListings', JobListingController::class)->except(['create', 'edit']);
+    Route::apiResource('connects', ConnectController::class)->except(['create', 'edit']);
 });

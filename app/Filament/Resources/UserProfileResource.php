@@ -23,6 +23,8 @@ class UserProfileResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'firstName')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 Forms\Components\DatePicker::make('dob'),
                 Forms\Components\TextInput::make('idNumber')
@@ -35,18 +37,21 @@ class UserProfileResource extends Resource
                     ->searchable()
                     ->preload()
                     ->options([
-                        'Married', 'Single', 'Widow', 'Widower'
+                        'Married'=>'Married', 'Single'=>'Single', 'Widow'=>'Widow', 'Widower'=>'Widower'
                     ]),
                 Forms\Components\Select::make('gender')
                     ->searchable()
                     ->preload()
                     ->options([
-                        'Male', 'Female'
+                        'Male'=>'Male', 'Female'=>'Female'
                     ]),
                 Forms\Components\TextInput::make('religion')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address'),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('status')
+                    ->options(['Active'=>'Active','Inactive'=>'Inactive','Pending Review'=>'Pending Review'])
+                    ->searchable()
+                    ->preload()
                     ->required(),
             ]);
     }
@@ -66,8 +71,10 @@ class UserProfileResource extends Resource
                 Tables\Columns\TextColumn::make('profession')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('highestEductionQualification'),
-                Tables\Columns\TextColumn::make('maritalStatus'),
-                Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('maritalStatus')
+                ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('gender')
+                ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('religion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status'),

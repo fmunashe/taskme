@@ -17,6 +17,9 @@ class Document extends Model
         'description',
         'documentPath',
     ];
+    protected $casts = [
+        'verified' => 'boolean',
+    ];
 
     public function userProfile(): BelongsTo
     {

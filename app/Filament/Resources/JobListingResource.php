@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class JobListingResource extends Resource
@@ -32,6 +33,7 @@ class JobListingResource extends Resource
                     ->preload()
                     ->required(),
                 Forms\Components\Select::make('user_id')
+                    ->label("Posted By")
                     ->relationship('user', 'firstName')
                     ->searchable()
                     ->preload()
@@ -39,19 +41,23 @@ class JobListingResource extends Resource
                 Forms\Components\TextInput::make('jobTitle')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('jobDescription')
+                Forms\Components\RichEditor::make('jobDescription')
                     ->required()
                     ->columnSpanFull(),
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('jobCategory.categoryName')
                     ->sortable(),
-                Tables\Columns\BadgeColumn::make('recordStatus.status')
+                Tables\Columns\TextColumn::make('recordStatus.status')
+                    ->badge()
                     ->colors([
                         'warning' => 'Pending Review',
                         'success' => 'Active',
@@ -72,7 +78,18 @@ class JobListingResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make("Status")
+                    ->multiple()
+                    ->relationship('recordStatus', 'status')
+                    ->preload()
+                    ->searchable(),
+
+                SelectFilter::make("Job Category")
+                    ->multiple()
+                    ->relationship('jobCategory', 'categoryName')
+                    ->preload()
+                    ->searchable(),
+
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -81,7 +98,7 @@ class JobListingResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -29,6 +29,9 @@ class ServiceCategoryResource extends Resource
                 Forms\Components\TextInput::make('categoryDescription')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\FileUpload::make('categoryImage')
+                    ->columnSpanFull()
+                    ->required(),
             ]);
     }
 
@@ -36,6 +39,7 @@ class ServiceCategoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('categoryImage'),
                 Tables\Columns\TextColumn::make('categoryName')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('categoryDescription')
@@ -59,7 +63,7 @@ class ServiceCategoryResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

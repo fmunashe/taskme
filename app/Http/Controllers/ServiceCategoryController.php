@@ -20,6 +20,7 @@ class ServiceCategoryController extends BaseController
     {
         $data = $request->all();
         $serviceCategory = ServiceCategory::query()->create([
+            'categoryImage' => $data['categoryImage'],
             'categoryName' => $data['categoryName'],
             'categoryDescription' => $data['categoryDescription'],
         ]);
@@ -46,6 +47,7 @@ class ServiceCategoryController extends BaseController
         $data = $request->all();
 
         $category->update([
+            'categoryImage' => $data['categoryImage'],
             'categoryName' => $data['categoryName'],
             'categoryDescription' => $data['categoryDescription']
         ]);

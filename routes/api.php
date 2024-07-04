@@ -29,7 +29,9 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthenticationController::class, 'login']);
+    Route::post('socialLogin', [AuthenticationController::class, 'socialLogin']);
     Route::post('register', [AuthenticationController::class, 'store']);
+    Route::post('socialSignup', [AuthenticationController::class, 'socialSignup']);
     Route::post('generateOneTimePin', [AuthenticationController::class, 'generateOneTimePin']);
     Route::post('verifyMobileNumber', [AuthenticationController::class, 'verifyMobileNumber']);
     Route::post('generateEmailVerificationCode', [AuthenticationController::class, 'generateEmailVerificationCode']);

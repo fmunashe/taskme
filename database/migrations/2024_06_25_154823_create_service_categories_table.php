@@ -12,6 +12,7 @@ return new class extends Migration {
     {
         Schema::create('service_categories', function (Blueprint $table) {
             $table->id();
+            $table->string("categoryImage");
             $table->string("categoryName");
             $table->string("categoryDescription");
             $table->timestamps();

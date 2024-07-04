@@ -18,13 +18,14 @@ class DisabilityResource extends Resource
     protected static ?string $model = Disability::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected ?string $maxContentWidth = 'full';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('user_profile_id')
-                    ->relationship('userProfile','idNumber')
+                    ->relationship('userProfile','id')
                     ->label('User Profile')
                     ->preload()
                     ->searchable()

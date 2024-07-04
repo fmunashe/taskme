@@ -9,7 +9,11 @@
         "filament/filament": "^3.2",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.9",
+        "psr/simple-cache": "^2.0",
+        "pxlrbt/filament-excel": "^2.3",
+        "saade/filament-fullcalendar": "^3.2",
         "twilio/sdk": "^8.2"
     },
     "require-dev": {

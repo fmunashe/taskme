@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\OtpGenerationRequest;
 use App\Http\Requests\PhoneNumberVerificationRequest;
 use App\Http\Requests\ResetPasswordRequest;
+use App\Http\Requests\SocialLoginRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\VerifyEmailRequest;
 use App\Models\User;
@@ -16,8 +17,10 @@ use App\Traits\GlobalData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Str;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthenticationController extends BaseController
 {
@@ -161,5 +164,39 @@ class AuthenticationController extends BaseController
         return $this->buildSuccessResponse(null, 'Logout Successful');
     }
 
+    public function socialLogin(SocialLoginRequest $request): JsonResponse
+    {
+        try {
+            $provider = $request->provider;
+            $socialToken = $request->token;
+            $socialUser = Socialite::driver($provider)->stateless()->userFromToken($socialToken);
 
+            $user = User::query()->firstWhere('email', $socialUser->getEmail);
+            Log::info("user from token is ", [$user]);
+            if (!$user) {
+                $user = User::query()->create([
+                    'firstName' => $socialUser->getName(),
+                    'lastName' => $socialUser->getName(),
+                    'email' => $socialUser->getEmail(),
+                    'role_id' => 1
+                ]);
+            }
+
+            $tokenName = Str::upper(Str::substr($user->firstName, 0, 1) . Str::substr($user->lastName, 0, 1));
+            $roleName = $user->role->name;
+            $user->tokens()->delete();
+
+            $success['token'] = $user->createToken(
+                $tokenName,
+                [$roleName],
+                now()->addDay()
+            )->plainTextToken;
+            $success['tokenName'] = $tokenName;
+            $success['userRole'] = $roleName;
+            $success['tokenType'] = 'Bearer';
+            return $this->buildSuccessResponse($success, 'User login successfully.');
+        } catch (\Exception $e) {
+            return $this->buildErrorResponse($e->getMessage(), [], 401);
+        }
+    }
 }

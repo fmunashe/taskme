@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class JobCategoryResource extends Resource
@@ -35,6 +36,9 @@ class JobCategoryResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -55,7 +59,11 @@ class JobCategoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+              SelectFilter::make('Status')
+                ->multiple()
+                ->relationship('recordStatus','status')
+                ->preload()
+                ->searchable()
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -64,7 +72,7 @@ class JobCategoryResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

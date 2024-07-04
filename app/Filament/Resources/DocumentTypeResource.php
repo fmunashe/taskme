@@ -37,6 +37,8 @@ class DocumentTypeResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('documentType')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')

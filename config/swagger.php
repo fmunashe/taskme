@@ -29,7 +29,7 @@ return [
     | The email associated with your API documentation.
     |
     */
-    "email" => env("SWAGGER_EMAIL", "hussein4alaa@gmail.com"),
+    "email" => env("SWAGGER_EMAIL", "zihovem@gmail.com@gmail.com"),
 
     /*
     |--------------------------------------------------------------------------

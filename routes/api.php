@@ -34,9 +34,9 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('socialSignup', [AuthenticationController::class, 'socialSignup']);
     Route::post('generateOneTimePin', [AuthenticationController::class, 'generateOneTimePin']);
     Route::post('verifyMobileNumber', [AuthenticationController::class, 'verifyMobileNumber']);
-    Route::post('generateEmailVerificationCode', [AuthenticationController::class, 'generateEmailVerificationCode']);
-    Route::post('verifyEmail', [AuthenticationController::class, 'verifyEmail']);
-    Route::post('resetPassword', [AuthenticationController::class, 'resetPassword']);
+//    Route::post('generateEmailVerificationCode', [AuthenticationController::class, 'generateEmailVerificationCode']);
+//    Route::post('verifyEmail', [AuthenticationController::class, 'verifyEmail']);
+//    Route::post('resetPassword', [AuthenticationController::class, 'resetPassword']);
 });
 
 Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
@@ -44,7 +44,7 @@ Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
     Route::post('auth/changeUserPassword', [AuthenticationController::class, 'changePassword']);
     Route::apiResource('roles', RoleController::class)->except(['create', 'edit']);
     Route::apiResource('users', UsersController::class)->except(['create', 'edit']);
-    Route::apiResource('references', ReferenceController::class)->except(['create', 'edit']);
+//    Route::apiResource('references', ReferenceController::class)->except(['create', 'edit']);
     Route::apiResource('profiles', UserProfileController::class)->except(['create', 'edit']);
     Route::apiResource('nextOfKin', NextOfKinController::class)->except(['create', 'edit']);
     Route::apiResource('healthConditions', HealthConditionController::class)->except(['create', 'edit']);
@@ -52,7 +52,7 @@ Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
     Route::apiResource('disabilities', DisabilityController::class)->except(['create', 'edit']);
     Route::apiResource('workExperience', WorkExperienceController::class)->except(['create', 'edit']);
     Route::apiResource('workExperienceDuties', WorkDutyController::class)->except(['create', 'edit']);
-    Route::apiResource('Documents', DocumentController::class)->except(['create', 'edit']);
+//    Route::apiResource('Documents', DocumentController::class)->except(['create', 'edit']);
     Route::group(['prefix' => 'documentVerification'], function () {
         Route::post('verifyCV', [DocumentsVerificationController::class, 'verifyCV']);
         Route::post('verifyNationalId', [DocumentsVerificationController::class, 'verifyNationalId']);
@@ -63,7 +63,7 @@ Route::middleware(['api', EnsureTokenIsValid::class])->group(function () {
     Route::apiResource('serviceCategories', ServiceCategoryController::class)->except(['create', 'edit']);
     Route::apiResource('serviceListings', ServiceListingController::class)->except(['create', 'edit']);
     Route::apiResource('recordStatuses', RecordStatusController::class)->except(['create', 'edit']);
-    Route::apiResource('jobCategories', JobCategoryController::class)->except(['create', 'edit']);
+//    Route::apiResource('jobCategories', JobCategoryController::class)->except(['create', 'edit']);
     Route::apiResource('jobListings', JobListingController::class)->except(['create', 'edit']);
     Route::apiResource('connects', ConnectController::class)->except(['create', 'edit']);
 });

@@ -25,7 +25,7 @@ class NextOfKinController extends BaseController
         if (!$user) {
             return $this->buildErrorResponse('Provided user does not exist in our records');
         }
-        $profile = $user->profile();
+        $profile = $user->profile;
         $relative = NextOfKin::query()->create([
             'user_profile_id' => $profile->id,
             'name' => $data['name'],

@@ -11,6 +11,7 @@ class Reference extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_profile_id',
         'name',
         'email',
         'mobile',

@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateReferenceRequest;
 use App\Models\Reference;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class ReferenceController extends BaseController
 {
@@ -24,7 +25,7 @@ class ReferenceController extends BaseController
         if (!$user) {
             return $this->buildErrorResponse('Provided user does not exist in our records');
         }
-        $profile = $user->profile();
+        $profile = $user->profile;
         $ref = Reference::query()->create([
             'user_profile_id' => $profile->id,
             'name' => $data['name'],

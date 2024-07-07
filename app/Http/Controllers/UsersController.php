@@ -22,7 +22,8 @@ class UsersController extends BaseController
             'profile.disabilities',
             'profile.healthConditions',
             'profile.references',
-            'profile.documents'
+            'profile.documents',
+            'profile.connect',
         ])->latest()->paginate(10);
         return $this->buildSuccessResponse($users, "Records retrieved successfully");
     }
@@ -38,7 +39,8 @@ class UsersController extends BaseController
             'profile.disabilities',
             'profile.healthConditions',
             'profile.references',
-            'profile.documents'
+            'profile.documents',
+            'profile.connect'
         ])->firstWhere('id', '=', $userId);
         if ($user == null) {
             return $this->buildErrorResponse("User with id " . $userId . " not found");

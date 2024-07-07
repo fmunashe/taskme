@@ -5,62 +5,59 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreConnectRequest;
 use App\Http\Requests\UpdateConnectRequest;
 use App\Models\Connect;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 
-class ConnectController extends Controller
+class ConnectController extends BaseController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+
+    public function index(): JsonResponse
     {
-        //
+        $connects = Connect::query()->latest()->paginate(10);
+        return $this->buildSuccessResponse($connects, 'Records retrieved successfully');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+
+    public function store(StoreConnectRequest $request): JsonResponse
     {
-        //
+        $connects = $request->totalConnects;
+        $userId = $request->userId;
+        $user = User::query()->firstWhere('id', '=', $userId);
+        if (!$user) {
+            return $this->buildErrorResponse('Provided user id does not exist');
+        }
+
+        $profile = $user->profile;
+        if (!$profile) {
+            return $this->buildErrorResponse('Provided user has no profile');
+        }
+
+        $connect = Connect::query()->create([
+            'user_profile_id' => $profile->id,
+            'totalConnects' => $connects
+        ]);
+
+        return $this->buildSuccessResponse($connect, 'Record successfully created');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreConnectRequest $request)
+
+    public function show(Connect $connect): JsonResponse
     {
-        //
+        return $this->buildSuccessResponse($connect, 'Record successfully retrieved');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Connect $connect)
+    public function update(UpdateConnectRequest $request, Connect $connect): JsonResponse
     {
-        //
+        $connect->update([
+            'user_profile_id' => $request->user_profile_id,
+            'totalConnects' => $request->totalConnects,
+        ]);
+        return $this->buildSuccessResponse(null, 'Record successfully updated');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Connect $connect)
+    public function destroy(Connect $connect): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateConnectRequest $request, Connect $connect)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Connect $connect)
-    {
-        //
+        $connect->delete();
+        return $this->buildSuccessResponse(null, 'Record successfully deleted');
     }
 }

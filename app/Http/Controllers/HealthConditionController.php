@@ -27,7 +27,7 @@ class HealthConditionController extends BaseController
         if (!$user) {
             return $this->buildErrorResponse('Provided user does not exist in our records');
         }
-        $profile = $user->profile();
+        $profile = $user->profile;
         $condition = HealthCondition::query()->create([
             'user_profile_id' => $profile->id,
             'conditionName' => $data['conditionName'],

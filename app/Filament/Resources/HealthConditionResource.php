@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\DisabilityResource\Pages;
-use App\Filament\Resources\DisabilityResource\RelationManagers;
-use App\Models\Disability;
+use App\Filament\Resources\HealthConditionResource\Pages;
+use App\Filament\Resources\HealthConditionResource\RelationManagers;
+use App\Models\HealthCondition;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,12 +14,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DisabilityResource extends Resource
+class HealthConditionResource extends Resource
 {
-    protected static ?string $model = Disability::class;
+    protected static ?string $model = HealthCondition::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-trash';
-    protected ?string $maxContentWidth = 'full';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
@@ -27,16 +26,15 @@ class DisabilityResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_profile_id')
                     ->relationship('userProfile','id')
-                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->user->firstName . ' ' . $record->user->lastName)
-                    ->label('User Profile')
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->user->firstName." ".$record->user->lastName )
                     ->preload()
                     ->searchable()
                     ->required(),
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('conditionName')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->maxLength(255),
+                Forms\Components\RichEditor::make('description')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -45,11 +43,8 @@ class DisabilityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('userProfile.user.firstName')
-                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('description')
+                Tables\Columns\TextColumn::make('conditionName')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -70,7 +65,7 @@ class DisabilityResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
@@ -85,9 +80,9 @@ class DisabilityResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDisabilities::route('/'),
-            'create' => Pages\CreateDisability::route('/create'),
-            'edit' => Pages\EditDisability::route('/{record}/edit'),
+            'index' => Pages\ListHealthConditions::route('/'),
+            'create' => Pages\CreateHealthCondition::route('/create'),
+            'edit' => Pages\EditHealthCondition::route('/{record}/edit'),
         ];
     }
 

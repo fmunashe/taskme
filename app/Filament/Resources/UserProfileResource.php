@@ -6,10 +6,12 @@ use App\Filament\Resources\UserProfileResource\Pages;
 use App\Filament\Resources\UserProfileResource\RelationManagers;
 use App\Models\UserProfile;
 use Filament\Forms;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Laravel\Prompts\TextareaPrompt;
 
 class UserProfileResource extends Resource
 {
@@ -32,7 +34,6 @@ class UserProfileResource extends Resource
                 Forms\Components\TextInput::make('profession')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('highestEductionQualification'),
-                Forms\Components\TextInput::make('bio'),
                 Forms\Components\Select::make('maritalStatus')
                     ->searchable()
                     ->preload()
@@ -53,7 +54,25 @@ class UserProfileResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-            ]);
+                Forms\Components\RichEditor::make('bio')
+                ->columnSpanFull(),
+
+                Forms\Components\Repeater::make('Health Conditions')
+                    ->relationship('healthConditions')
+                    ->schema([
+                        TextInput::make('conditionName'),
+                        TextInput::make('description'),
+                    ])->columns(2)->columnSpanFull(),
+
+                Forms\Components\Repeater::make('Next of Kin Details')
+                    ->relationship('relatives')
+                    ->schema([
+                        TextInput::make('name'),
+                        TextInput::make('mobile'),
+                        TextInput::make('relationship'),
+                        TextInput::make('address'),
+                    ])->columns(2)->columnSpanFull(),
+            ])->columns(2);
     }
 
     public static function table(Table $table): Table
@@ -116,5 +135,14 @@ class UserProfileResource extends Resource
             'create' => Pages\CreateUserProfile::route('/create'),
             'edit' => Pages\EditUserProfile::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'User Management';
+    }
+    public static function getNavigationIcon(): string
+    {
+        return 'heroicon-o-users';
     }
 }

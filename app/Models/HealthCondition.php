@@ -12,7 +12,7 @@ class HealthCondition extends Model
 
     protected $guarded = [];
 
-    public function profile(): BelongsTo
+    public function userProfile(): BelongsTo
     {
         return $this->belongsTo(UserProfile::class);
     }

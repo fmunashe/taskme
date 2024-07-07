@@ -13,7 +13,7 @@ class NextOfKinPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class NextOfKinPolicy
      */
     public function view(User $user, NextOfKin $nextOfKin): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class NextOfKinPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class NextOfKinPolicy
      */
     public function update(User $user, NextOfKin $nextOfKin): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +45,7 @@ class NextOfKinPolicy
      */
     public function delete(User $user, NextOfKin $nextOfKin): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ class NextOfKinPolicy
      */
     public function restore(User $user, NextOfKin $nextOfKin): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -61,6 +61,6 @@ class NextOfKinPolicy
      */
     public function forceDelete(User $user, NextOfKin $nextOfKin): bool
     {
-        //
+        return true;
     }
 }

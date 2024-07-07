@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Disability;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class DisabilityPolicy
 {
@@ -13,8 +14,8 @@ class DisabilityPolicy
      */
     public function viewAny(User $user): bool
     {
-
-        return true;
+        return  true;
+        return ($user->role->name=="Admin" || $user->role->name=="SuperAdmin");
     }
 
     /**
@@ -22,7 +23,7 @@ class DisabilityPolicy
      */
     public function view(User $user, Disability $disability): bool
     {
-        return true;
+        return ($user->role->name=="Admin" || $user->role->name=="SuperAdmin" || $disability->user_profile_id==$user->profile->id);
     }
 
     /**
@@ -30,7 +31,7 @@ class DisabilityPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return ($user->role->name=="Admin" || $user->role->name=="SuperAdmin" || Auth::user()->id==$user->profile->user_id);
     }
 
     /**
@@ -38,7 +39,7 @@ class DisabilityPolicy
      */
     public function update(User $user, Disability $disability): bool
     {
-        return true;
+        return ($user->role->name=="Admin" || $user->role->name=="SuperAdmin" || $disability->user_profile_id==$user->profile->id);
     }
 
     /**
@@ -46,7 +47,7 @@ class DisabilityPolicy
      */
     public function delete(User $user, Disability $disability): bool
     {
-        return true;
+        return ($user->role->name=="Admin" || $user->role->name=="SuperAdmin" || $disability->user_profile_id==$user->profile->id);
     }
 
     /**
@@ -54,7 +55,7 @@ class DisabilityPolicy
      */
     public function restore(User $user, Disability $disability): bool
     {
-        return true;
+        return ($user->role->name=="Admin" || $user->role->name=="SuperAdmin" || $disability->user_profile_id==$user->profile->id);
     }
 
     /**
@@ -62,6 +63,6 @@ class DisabilityPolicy
      */
     public function forceDelete(User $user, Disability $disability): bool
     {
-        return true;
+        return ($user->role->name=="Admin" || $user->role->name=="SuperAdmin" || $disability->user_profile_id==$user->profile->id);
     }
 }

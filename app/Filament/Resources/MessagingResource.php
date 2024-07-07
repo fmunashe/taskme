@@ -16,7 +16,7 @@ class MessagingResource extends Resource
 {
     protected static ?string $model = Message::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-sun';
 
     public static function form(Form $form): Form
     {
@@ -102,5 +102,10 @@ class MessagingResource extends Resource
             'create' => Pages\CreateMessaging::route('/create'),
             'edit' => Pages\EditMessaging::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'User Profile Attributes';
     }
 }

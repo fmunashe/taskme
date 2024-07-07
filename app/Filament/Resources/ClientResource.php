@@ -6,6 +6,9 @@ use App\Filament\Resources\ClientResource\Pages;
 use App\Filament\Resources\ClientResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -28,9 +31,10 @@ class ClientResource extends Resource
                 Forms\Components\TextInput::make('password')->password()->required(),
                 Forms\Components\Select::make('role_id')
                     ->preload()
-                    ->relationship('role','name')
+                    ->relationship('role', 'name')
                     ->searchable(),
-            ]);
+            ])
+            ->columns(2);
     }
 
     /**
@@ -41,18 +45,24 @@ class ClientResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('firstName'),
-                Tables\Columns\TextColumn::make('lastName'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('phoneNumber'),
-                Tables\Columns\TextColumn::make('role.name'),
+                Tables\Columns\TextColumn::make('firstName')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('lastName')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('phoneNumber')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('role.name')
+                    ->searchable(),
             ])
             ->filters([
-               Tables\Filters\SelectFilter::make('Role')
-                ->multiple()
-                ->relationship('role','name')
-                ->preload()
+                Tables\Filters\SelectFilter::make('Role')
+                    ->multiple()
+                    ->relationship('role', 'name')
+                    ->preload()
             ])
+            ->persistFiltersInSession()
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -79,5 +89,15 @@ class ClientResource extends Resource
             'create' => Pages\CreateClient::route('/create'),
             'edit' => Pages\EditClient::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'User Management';
+    }
+
+    public static function getNavigationIcon(): string
+    {
+        return 'heroicon-o-user';
     }
 }

@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
 
 class DocumentResource extends Resource
 {
@@ -25,6 +26,7 @@ class DocumentResource extends Resource
             ->schema([
                 Forms\Components\Select::make('user_profile_id')
                     ->relationship('userProfile', 'id')
+                    ->getOptionLabelFromRecordUsing(fn (Model $record) => $record->user->firstName . ' ' . $record->user->lastName)
                     ->searchable()
                     ->preload()
                     ->required(),
@@ -116,5 +118,10 @@ class DocumentResource extends Resource
             'create' => Pages\CreateDocument::route('/create'),
             'edit' => Pages\EditDocument::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'User Profile Attributes';
     }
 }

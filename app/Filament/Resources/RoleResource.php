@@ -9,9 +9,8 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RoleResource extends Resource
 {
@@ -32,6 +31,9 @@ class RoleResource extends Resource
             ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function table(Table $table): Table
     {
         return $table
@@ -52,7 +54,17 @@ class RoleResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make("name")
+                    ->label('Role Name')
+                    ->multiple()
+                    ->options([
+                        'User' => 'User',
+                        'Admin' => 'Admin',
+                        'SuperAdmin' => 'Super Admin',
+                        'Client' => 'Client',
+                        'Support' => 'Support',
+                        'ServiceProvider' => 'Service Provider',
+                    ])
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -80,5 +92,15 @@ class RoleResource extends Resource
             'create' => Pages\CreateRole::route('/create'),
             'edit' => Pages\EditRole::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'User Management';
+    }
+
+    public static function getNavigationIcon(): string
+    {
+        return 'heroicon-o-key';
     }
 }

@@ -16,7 +16,7 @@ class RecordStatusResource extends Resource
 {
     protected static ?string $model = RecordStatus::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-signal';
 
     public static function form(Form $form): Form
     {
@@ -39,17 +39,21 @@ class RecordStatusResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                    ->searchable()
+                    ->size('sm'),
                 Tables\Columns\TextColumn::make('description')
-                    ->searchable(),
+                    ->searchable()
+                    ->size('sm'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->size('sm'),
                 Tables\Columns\TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->size('sm'),
             ])
             ->filters([
                 SelectFilter::make('status')
@@ -62,6 +66,7 @@ class RecordStatusResource extends Resource
                         'Deleted' => 'Deleted',
                     ])
             ])
+            ->persistFiltersInSession()
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -69,8 +74,8 @@ class RecordStatusResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ExportBulkAction::make(),
+//                    Tables\Actions\DeleteBulkAction::make(),
+//                    Tables\Actions\ExportBulkAction::make(),
                 ]),
             ]);
     }
@@ -89,5 +94,10 @@ class RecordStatusResource extends Resource
             'create' => Pages\CreateRecordStatus::route('/create'),
             'edit' => Pages\EditRecordStatus::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'Configuration';
     }
 }

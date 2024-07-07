@@ -104,4 +104,9 @@ class ServiceListingResource extends Resource
             'edit' => Pages\EditServiceListing::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationGroup(): ?string
+    {
+        return 'User Profile Attributes';
+    }
 }

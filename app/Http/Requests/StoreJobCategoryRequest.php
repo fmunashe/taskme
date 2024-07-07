@@ -20,7 +20,7 @@ class StoreJobCategoryRequest extends FormRequest
         return [
             'categoryName' => 'required|unique:job_categories',
             'categoryDescription' => 'required',
-            'record_status_id' => 'required|exists:record_statuses'
+            'record_status_id' => 'required|exists:record_statuses,id'
         ];
     }
 

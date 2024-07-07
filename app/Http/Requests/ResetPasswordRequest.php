@@ -27,7 +27,7 @@ class ResetPasswordRequest extends FormRequest
                     ->uncompromised(3),
                 'confirmed'
             ],
-            'otp' => 'required|exists:users'
+            'otp' => 'required|exists:users,otp'
         ];
     }
 

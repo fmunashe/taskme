@@ -15,10 +15,10 @@ class Document extends Model
         'document_type_id',
         'name',
         'description',
-        'documentPath',
+        'documentPath'
     ];
     protected $casts = [
-        'verified' => 'boolean',
+        'verified' => 'boolean'
     ];
 
     public function userProfile(): BelongsTo

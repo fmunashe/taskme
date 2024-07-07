@@ -18,9 +18,9 @@ class StoreDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_profile_id' => 'required|exists:user_profiles',
-            'document_type_id' => 'required|exists:document_types',
-            'document' => ['required', 'mimes:docx.doc,pdf,png,jpeg,jpg'],
+            'user_profile_id' => 'required|exists:user_profiles,id',
+            'document_type_id' => 'required|exists:document_types,id',
+            'document' => ['required','file', 'mimes:docx.doc,pdf,png,jpeg,jpg'],
             'description' => 'required'
         ];
     }

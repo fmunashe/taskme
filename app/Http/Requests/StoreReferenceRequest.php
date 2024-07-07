@@ -18,7 +18,7 @@ class StoreReferenceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'required|exists:users',
+            'userId' => 'required|exists:users,id',
             'name' => 'required',
             'email' => 'required|email',
             'mobile' => 'required',

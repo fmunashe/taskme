@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Resources\HealthConditionResource\Pages;
+namespace App\Filament\Resources\ReferenceResource\Pages;
 
-use App\Filament\Resources\HealthConditionResource;
+use App\Filament\Resources\ReferenceResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use pxlrbt\FilamentExcel\Actions\Pages\ExportAction;
 use pxlrbt\FilamentExcel\Columns\Column;
 use pxlrbt\FilamentExcel\Exports\ExcelExport;
 
-class ListHealthConditions extends ListRecords
+class ListReferences extends ListRecords
 {
-    protected static string $resource = HealthConditionResource::class;
+    protected static string $resource = ReferenceResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -30,4 +30,6 @@ class ListHealthConditions extends ListRecords
                 ]),
         ];
     }
+
+
 }

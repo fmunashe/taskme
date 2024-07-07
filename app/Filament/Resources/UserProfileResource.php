@@ -72,6 +72,16 @@ class UserProfileResource extends Resource
                         TextInput::make('relationship'),
                         TextInput::make('address'),
                     ])->columns(2)->columnSpanFull(),
+
+                Forms\Components\Repeater::make('References')
+                    ->relationship('references')
+                    ->schema([
+                        TextInput::make('name'),
+                        TextInput::make('email'),
+                        TextInput::make('mobile'),
+                        TextInput::make('role'),
+                        TextInput::make('organisation'),
+                    ])->columns(2)->columnSpanFull(),
             ])->columns(2);
     }
 
@@ -97,6 +107,7 @@ class UserProfileResource extends Resource
                 Tables\Columns\TextColumn::make('religion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status'),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

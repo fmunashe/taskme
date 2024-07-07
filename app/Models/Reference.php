@@ -19,7 +19,7 @@ class Reference extends Model
         'organisation'
     ];
 
-    public function profile(): BelongsTo
+    public function userProfile(): BelongsTo
     {
         return $this->belongsTo(UserProfile::class);
     }
